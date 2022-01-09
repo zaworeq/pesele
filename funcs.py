@@ -41,6 +41,8 @@ def generate_unique_ssns(index, sex, birth_start, birth_end):
         for _ in range(3):
             pesel_digits.append(random.randint(0, 9))
 
+        # Przyjmuję że jako płeć można wpisać tylko "male" lub "female"
+        # I assume that you can enter only "male" or "female" as gender
         if sex == "male":
             pesel_digits.append(random.choice([1, 3, 5, 7, 9]))
         else:
