@@ -1,5 +1,12 @@
 import time
-from funcs import generate_ssns, generate_unique_ssns
+from funcs import generate_ssns, generate_unique_ssns, validate_ssn
+
+validate_ssn("90010977720", "female", "1990-01-09")
+validate_ssn("90010977720", "male", "1990-01-09")
+validate_ssn("90011539431", "female", "1990-01-15")
+validate_ssn("90011539431", "male", "1990-01-15")
+validate_ssn("90010977720", "female", "1990-01-10")
+validate_ssn("90011539431", "male", "1990-01-11")
 
 print("Generate ssns results: ")
 start = time.time()

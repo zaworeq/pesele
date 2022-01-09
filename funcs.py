@@ -56,6 +56,44 @@ def generate_unique_ssns(index, sex, birth_start, birth_end):
     return ssn_series
 
 
+def validate_ssn(ssn, sex, birth_date):
+    birth_date = datetime.strptime(birth_date, "%Y-%m-%d")
+
+    year_without_century = int(birth_date.strftime("%y"))
+    month = calculate_month(birth_date)
+    day = int(birth_date.strftime("%d"))
+
+    pesel_digits = [
+        int(year_without_century / 10),
+        year_without_century % 10,
+        int(month / 10),
+        month % 10,
+        int(day / 10),
+        day % 10,
+    ]
+
+    ssn_list = [int(x) for x in str(ssn)]
+    for j in [6, 7, 8]:
+        pesel_digits.append(ssn_list[j])
+
+    if sex == "male" and (ssn_list[9] % 2) == 1:
+        pesel_digits.append(ssn_list[9])
+    elif sex == "female" and (ssn_list[9] % 2) == 0:
+        pesel_digits.append(ssn_list[9])
+    else:
+        print("Provided SSN is not valid! :C")
+        return 0
+
+    pesel_digits.append(ssn_list[10])
+
+    ssn_to_validate = "".join(str(digit) for digit in pesel_digits)
+
+    if ssn_to_validate == ssn:
+        print("Provided SSN is valid! :D")
+    else:
+        print("Provided SSN is not valid! :C")
+
+
 def calculate_month(birth_date: datetime) -> int:
     year = int(birth_date.strftime("%Y"))
     month = int(birth_date.strftime("%m")) + ((int(year / 100) - 14) % 5) * 20
